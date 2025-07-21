@@ -1,6 +1,6 @@
-import Header from "../componentes/header"
+import Header from "@/componentes/header";
 import json from "../../services/ptbr.json";
-import Button from "../componentes/button";
+import Button from "@/componentes/button";
 import { FaCheck } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import { FaInstagram, FaWhatsapp, FaPhone  } from "react-icons/fa";
@@ -71,7 +71,7 @@ function Home(){
                                 </div>
 
                                 
-                                <div className="w-full material aspect-square p-4">
+                                <div className="w-full material aspect-square p-4 rounded-lg">
                                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.867249697327!2d-46.644036988099344!3d-23.537276578727973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce595c8fdd717d%3A0x818cf3f53103434f!2sNewTech%20TVs!5e0!3m2!1spt-BR!2sbr!4v1753126427191!5m2!1spt-BR!2sbr" width="100%" height="100%"></iframe>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@ function Home(){
                                 <div className="material p-8 text-center text-xl flex flex-col gap-12 rounded-lg">
                                     <img src='./icon.webp' alt='logo' className="w-full max-w-32 self-center"/>
                                     <p>{data.part4.title2}</p>
-                                    <div className="flex overflow-x-auto gap-4 p-4 border-2 border-white rounded-lg hide-scrollbar max-w-3/4 mx-auto" ref={scrollRef}>
+                                    <div className="flex overflow-x-auto gap-4 p-4 border-2 border-white rounded-lg hide-scrollbar w-full mx-auto" ref={scrollRef}>
                                         {data.part4.list.length > 0 && data.part4.list.map((item, index) => (
                                             <article key={index} className="min-w-16">
                                                 <img src={item} alt="logo" className="w-full" />
@@ -134,8 +134,8 @@ function Home(){
                             </div>
                         </section>
 
-                <footer className=" w-full flex-col pt-6 flex gap-8 shadow-lg border-t-2 border-white">
-                    <div className="p-4 py-6 border-b border-white/20 w-full m-auto max-w-7xl">
+                <footer className=" w-full flex-col pt-6 flex gap-8 shadow-lg border-t-2 border-white text-neutral-600">
+                    <div className="p-4 py-6 w-full m-auto max-w-7xl">
                         <ul className="flex gap-6 text-2xl">
                             <li className="hover:scale-125 duration-200">
                                 <a
@@ -162,7 +162,7 @@ function Home(){
 
                         <div className="flex flex-col gap-4 lg:flex-row lg:gap-16">
                             <div className="flex flex-col gap-2">
-                                <b className="relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-1/2 after:h-[2px] after:bg-black">
+                                <b className="relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-1/2 after:h-[2px] after:bg-neutral-600">
                                     {data.part6 && data.part6.list1title && data.part6.list1title}
                                 </b>
                                 <ul>
@@ -173,7 +173,7 @@ function Home(){
                             </div>
 
                             <div className="flex flex-col gap-2">
-                                <b className="relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-1/2 after:h-[2px] after:bg-black">
+                                <b className="relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-1/2 after:h-[2px] after:bg-neutral-600">
                                     {data.part6 && data.part6.list2title && data.part6.list2title}
                                 </b>
                                 <ul>
@@ -195,7 +195,7 @@ function Home(){
                     </div>
 
                     <div className="p-4 py-8 md:px-16  flex flex-col gap-4 ">
-                        <div className="w-full border-b border-white/20 pb-4">
+                        <div className="w-full pb-4">
                             <p><b>Endereço: </b>{data.address && data.address}</p>
                         </div>
                         
