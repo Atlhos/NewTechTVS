@@ -1,0 +1,32 @@
+button, input{
+    border: none;
+    outline: none;
+}
+
+p{
+    color: var(--color-neutral-500);
+}
+
+.title{
+   text-align: center; 
+   font-size: 28px;
+}
+
+.material{
+    border:2px white solid;
+    background: #ffffff;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 63%, rgba(255, 255, 255, 0) 100%);
+}
+
+.hide::-webkit-scrollbar {
+  height: 0;
+}
+
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

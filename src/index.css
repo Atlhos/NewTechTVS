@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+
+@theme inline {
+  --color-main: var(--main);
+  --color-mainDark: var(--mainDark);
+}
+
+:root {
+  --mainDark: #080390;
+  --main: #203FA7;
+}
+

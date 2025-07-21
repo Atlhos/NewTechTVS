@@ -1,0 +1,105 @@
+{
+    "part1":{
+        "title":"Quebrou? a gente conserta",
+        "subtitle":"Comércio e manutenção de televisores, celulares, games e notebook",
+        "button":"Orçamento",
+        "list":[
+            "Reparo rápido",
+            "Buscamos e levamos",
+            "Serviços com garantia",
+            "Orçamento prévio online"
+        ]
+    },
+
+    "part2":{
+        "title":"Quem somos?",
+        "description":"A NewTech TVs é uma assistência técnica especializada em TVs, computadores e smartphones, atuando no mercado desde 2021. Nossa empresa se destaca como referência em reparos, abrangendo desde problemas simples até os mais complexos. Priorizamos a qualidade e a agilidade em todos os nossos serviços, contando com uma equipe de técnicos altamente qualificados, com ampla experiência e certificações na área. Estamos comprometidos em oferecer soluções eficazes e seguras para todos os seus dispositivos eletrônicos, garantindo um atendimento de excelência e serviços confiáveis."
+    },
+
+    "part3":{
+        "title":"O que encontrará aqui?",
+        "list":[
+            {   
+                "title":"Reparos avançados",
+                "description":"Na NewTech, realizamos análises detalhadas e oferecemos soluções de reparo, desde os mais simples até os mais avançados.",
+                "icon":"<svg stroke='currentColor' fill='currentColor' stroke-width='0' viewBox='0 0 640 512' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'><path d='M592 0H48A48 48 0 0 0 0 48v320a48 48 0 0 0 48 48h240v32H112a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16H352v-32h240a48 48 0 0 0 48-48V48a48 48 0 0 0-48-48zm-16 352H64V64h512z'></path></svg>"
+            },
+            {   
+                "title":"Técnicos especializados",
+                "description":"Nossos técnicos acumulam anos de experiência em reparos e manutenção.",
+                "icon":"<svg stroke='currentColor' fill='currentColor' stroke-width='0' viewBox='0 0 24 24' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'><path fill='none' stroke-width='2' d='M8,11 C10.7614237,11 13,8.76142375 13,6 C13,3.23857625 10.7614237,1 8,1 C5.23857625,1 3,3.23857625 3,6 C3,8.76142375 5.23857625,11 8,11 Z M14.6431888,15.6961461 C14.3091703,14.6675626 13.7524493,13.7598949 13.0233822,13.0234994 C11.7718684,11.7594056 10.0125018,11 8,11 C4,11 1,14 1,18 L1,23 L11,23 M12,18.8235294 L16.1904762,22 L23,13'></path></svg>"
+            },  
+            {   
+                "title":"Certificados",
+                "description":"Nossos técnicos têm formação técnica, o que lhes permite aprender com renomados profissionais da área.",
+                "icon":"<svg stroke='currentColor' fill='currentColor' stroke-width='0' viewBox='0 0 1024 1024' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'><path d='M866.9 169.9L527.1 54.1C523 52.7 517.5 52 512 52s-11 .7-15.1 2.1L157.1 169.9c-8.3 2.8-15.1 12.4-15.1 21.2v482.4c0 8.8 5.7 20.4 12.6 25.9L499.3 968c3.5 2.7 8 4.1 12.6 4.1s9.2-1.4 12.6-4.1l344.7-268.6c6.9-5.4 12.6-17 12.6-25.9V191.1c.2-8.8-6.6-18.3-14.9-21.2zM810 654.3L512 886.5 214 654.3V226.7l298-101.6 298 101.6v427.6zm-405.8-201c-3-4.1-7.8-6.6-13-6.6H336c-6.5 0-10.3 7.4-6.5 12.7l126.4 174a16.1 16.1 0 0 0 26 0l212.6-292.7c3.8-5.3 0-12.7-6.5-12.7h-55.2c-5.1 0-10 2.5-13 6.6L468.9 542.4l-64.7-89.1z'></path></svg>"
+            }
+        ]
+    },
+
+    "part4":{
+        "title":"Trabalhamos com:",
+        "title2":"Na Newtech, trabalhamos com diversos tipos de televisores, incluindo modelos das marcas:",
+        "list":[
+            "./logos/aoc.webp",
+            "./logos/cce.webp",
+            "./logos/lg.webp",
+            "./logos/panasonic.webp",
+            "./logos/philco.webp",
+            "./logos/samsung.webp",
+            "./logos/sharp.webp",
+            "./logos/sony.webp",
+            "./logos/tlc.webp"
+        ]
+    },
+
+    "part5":{
+        "title":"Serviços realizados",
+        "list":[
+            {
+                "title":"manutenção",
+                "image":"./services/1.webp",
+                "description":"Aqui na New Tech, oferecemos serviços especializados de manutenção para televisores, computadores, videogames e smartphones, abrangendo uma ampla variedade de marcas e modelos. Nossa equipe está preparada para garantir um atendimento de qualidade e soluções eficientes para seus dispositivos."
+            },
+            {
+                "title":"Coleta e entrega",
+                "image":"./services/2.webp",
+                "description":"Para sua maior comodidade, oferecemos o serviço de retirada e entrega do seu equipamento diretamente em sua casa. Após a manutenção, devolvemos o dispositivo com total segurança. O custo desse serviço varia conforme sua localização, mas foi pensado para proporcionar mais praticidade e conforto para você."
+            },
+            {
+                "title":"Vendas",
+                "image":"./services/3.webp",
+                "description":"Vendemos placas de televisores através da nossa página no Mercado Livre. Além disso, também oferecemos televisores de diversos modelos, cabos, controles e game sticks, garantindo uma variedade de produtos para atender às suas necessidades."
+            }
+        ]
+    },
+
+    "part6":{
+        "list1title":"Serviços",
+        "list1":[
+            "Manutenção",
+            "Coleta e entrega",
+            "Vendas"
+        ],
+        "list2title":"Equipamentos",
+        "list2":[
+            "Televisores",
+            "Computadores",
+            "Video games",
+            "Smartphones"
+        ],
+        "list3title":"Horário de atendimento",
+        "list3":[
+            "Segunda-feira: 08:00 - 17:00",
+            "Terça-feira: 08:00 - 17:00",
+            "Quarta-feira: 08:00 - 17:00",
+            "Quinta-feira: 08:00 - 17:00",
+            "Sexta-feira: 08:00 - 17:00",
+            "Sábado: 09:00 - 13:00"
+        ]   
+    },
+    "address":"Rua General Osório, 330 - Santa Ifigênia, São Paulo - SP. 01213-000",
+    "maps":"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3657.902767137296!2d-46.64186404029697!3d-23.53599933625532!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce595c8fdd717d%3A0x818cf3f53103434f!2sNewTech%20TVs!5e0!3m2!1sen!2sbr!4v1741220063884!5m2!1sen!2sbr",
+    "instagram":"https://www.instagram.com/newtech.tvs/",
+    "phone":"5511969205393"
+}
