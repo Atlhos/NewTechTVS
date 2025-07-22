@@ -1,13 +1,20 @@
-interface buttonProps extends React.HTMLAttributes<HTMLButtonElement> {
-    text: string;
+import React from 'react';
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    text?: string;
+    className?: string;
+    children?: React.ReactNode;
 }
 
-function Button ({text, ...rest}: buttonProps) {
-    return(
-        <button {...rest} className="bg-main text-white px-4 py-2 rounded-lg text-xs md:text-md font-semibold hover:bg-mainDark cursor-pointer">
-            {text}
+function Button({ text, className = '', children, ...rest }: ButtonProps) {
+    return (
+        <button
+        {...rest}
+        className={`bg-main text-white p-6 py-3 rounded-lg text-xs md:text-md font-semibold hover:bg-mainDark cursor-pointer ${className}`}
+        >
+        {children ?? text}
         </button>
-    )
+    );
 }
 
 export default Button;

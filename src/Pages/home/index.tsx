@@ -4,12 +4,22 @@ import Button from "@/componentes/button";
 import { FaCheck } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import { FaInstagram, FaWhatsapp, FaPhone  } from "react-icons/fa";
+import axios from "axios";
+import Carousel from "react-multi-carousel";
+import convertDriveLink from "@/utils/convertDriveLink";
 
+
+interface productsProps{
+    name: string;
+    image: string;
+    price: string;
+}
 function Home(){
 
     const scrollRef = useRef<HTMLDivElement>(null);
+    const [loading, setLoading] = useState(true);
     const data = json || null;
-
+    const [products, setProducts] = useState<productsProps[]>([]); 
     const [direction, setDirection] = useState(1);
 
     useEffect(() => {
@@ -31,12 +41,69 @@ function Home(){
         return () => clearInterval(interval);
     }, [direction]);
 
+    async function getProducts() {
+        const sheetID = import.meta.env.VITE_SHEETID;
+        const apiKey = import.meta.env.VITE_APIKEY;
+        const aba = import.meta.env.VITE_SHEETABA;
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${aba}?key=${apiKey}`;
+
+        try {
+            const response = await axios.get(url);
+            
+            const rows = response.data.values;
+            if (!rows || rows.length === 0) {
+                console.log("Sem dados retornados da planilha");
+                return;
+            }
+
+            const produtosData = rows.slice(1).map((row: string[]) => ({
+                name: row[0],
+                price: row[1],
+                image: row[2],
+            }));
+
+            setProducts(produtosData);
+        } catch (error) {
+            console.error("Erro ao carregar os dados", error);
+        }
+    }
+
+    useEffect(() => {
+        getProducts();
+        if (data){
+            setLoading(false);
+        }
+    }, []); 
+
+    const responsive = {
+        desktop: {
+            breakpoint: { max: 999999999999, min: 1024 },
+            items: 3
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 640 },
+            items: 2
+        },
+        mobile: {
+            breakpoint: { max: 640, min: 0 },
+            items: 1
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+            </div>
+        );
+    }
+
     return(
         <>
             <Header />
             {data && (
                 <>
-                    <main className="overflow-hidden flex flex-col gap-32">
+                    <main className="flex flex-col gap-24">
 
 
                         <section className="w-full h-screen">
@@ -44,9 +111,9 @@ function Home(){
                                 <article className="flex flex-col gap-6 text-center">
                                     <h1 className="text-5xl">{data.part1.title}</h1>
                                     <p className="text-xl tex">{data.part1.subtitle}</p>
-                                    <div className="scale-125">
-                                        <Button text={data.part1.button} />
-                                    </div>
+                                    
+                                    <Button text={data.part1.button} className="scale-125 w-fit mx-auto"/>
+                                    
                                 </article>
 
                                 <article className="flex gap-4 items-center flex-col-reverse">
@@ -134,74 +201,109 @@ function Home(){
                             </div>
                         </section>
 
-                <footer className=" w-full flex-col pt-6 flex gap-8 shadow-lg border-t-2 border-white text-neutral-600">
-                    <div className="p-4 py-6 w-full m-auto max-w-7xl">
-                        <ul className="flex gap-6 text-2xl">
-                            <li className="hover:scale-125 duration-200">
-                                <a
-                                href={data.instagram && data.instagram} target="_blank">
-                                    < FaInstagram/>
-                                </a>
-                            </li>
-                            <li className="hover:scale-125 duration-200">
-                                <a target="_blank"
-                                href={`https://api.whatsapp.com/send?phone=${data && data.phone && data.phone}`}>
-                                    < FaWhatsapp/>
-                                </a>
-                            </li>
-                            <li className="hover:scale-125 duration-200">
-                                <a href={data.phone &&  `tel:${data.phone}` } target="_blank"
-                                >
-                                    < FaPhone />
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                        <section className="w-full">
+                            <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8">
+                                <h1 className="title">{data.part6.title}</h1>
+                                <div className="w-full items-stretch">
+                                    <Carousel
+                                        responsive={responsive}>
+                                            {products.map((item, index) => (
+                                                <article key={index} className="p-2 ">
 
-                    <div className="flex items-start justify-between p-4 w-full m-auto max-w-7xl">
+                                                    <div className="flex flex-col gap-4 border-4 border-white p-4 rounded-lg">
+                                                        <div className="w-full bg-white p-2 text-center rounded-xl">
+                                                            <h3>{item.name}</h3>
+                                                        </div>
+                                                        <h2 className="text-xl text-end">{item.price}</h2>
+                                                        <div className="w-full aspect-video bg-white rounded-lg relative overflow-hidden ">
+                                                            <img
+                                                                src={convertDriveLink(item.image)}
+                                                                alt="logo"
+                                                                className="absolute inset-0 w-full h-full object-contain object-center"
+                                                            />
+                                                        </div>
 
-                        <div className="flex flex-col gap-4 lg:flex-row lg:gap-16">
-                            <div className="flex flex-col gap-2">
-                                <b className="relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-1/2 after:h-[2px] after:bg-neutral-600">
-                                    {data.part6 && data.part6.list1title && data.part6.list1title}
-                                </b>
-                                <ul>
-                                    {data.part6 && data.part6.list1.length > 0 && data.part6.list1.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))}
-                                </ul>
+                                                        <Button text="Comprar"/>
+                                                    </div>
+                                                    
+                                                    
+
+                                                </article>
+                                            ))}
+
+                                        </Carousel>
+                                </div>
                             </div>
+                        </section>
 
-                            <div className="flex flex-col gap-2">
-                                <b className="relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-1/2 after:h-[2px] after:bg-neutral-600">
-                                    {data.part6 && data.part6.list2title && data.part6.list2title}
-                                </b>
-                                <ul>
-                                    {data.part6 && data.part6.list2.length > 0 && data.part6.list2.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div className="text-end clear-start flex flex-col gap-4">
-                            <b>{data.part6 && data.part6.list3title && data.part6.list3title}</b>
-                            <ul className="flex flex-col gap-2">
-                                {data.part6 && data.part6.list3.length > 0 && data.part6.list3.map((item, index) => (
-                                    <li key={index}>{item}</li>
-                                ))}
+                    <footer className=" w-full flex-col pt-6 flex gap-8 shadow-lg border-t-2 border-white text-neutral-600">
+                        <div className="p-4 py-6 w-full m-auto max-w-7xl">
+                            <ul className="flex gap-6 text-2xl">
+                                <li className="hover:scale-125 duration-200">
+                                    <a
+                                    href={data.instagram && data.instagram} target="_blank">
+                                        < FaInstagram/>
+                                    </a>
+                                </li>
+                                <li className="hover:scale-125 duration-200">
+                                    <a target="_blank"
+                                    href={`https://api.whatsapp.com/send?phone=${data && data.phone && data.phone}`}>
+                                        < FaWhatsapp/>
+                                    </a>
+                                </li>
+                                <li className="hover:scale-125 duration-200">
+                                    <a href={data.phone &&  `tel:${data.phone}` } target="_blank"
+                                    >
+                                        < FaPhone />
+                                    </a>
+                                </li>
                             </ul>
                         </div>
-                    </div>
 
-                    <div className="p-4 py-8 md:px-16  flex flex-col gap-4 ">
-                        <div className="w-full pb-4">
-                            <p><b>Endereço: </b>{data.address && data.address}</p>
+                        <div className="flex items-start justify-between p-4 w-full m-auto max-w-7xl">
+
+                            <div className="flex flex-col gap-4 lg:flex-row lg:gap-16">
+                                <div className="flex flex-col gap-2">
+                                    <b className="relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-1/2 after:h-[2px] after:bg-neutral-600">
+                                        {data.footer && data.footer.list1title && data.footer.list1title}
+                                    </b>
+                                    <ul>
+                                        {data.footer && data.footer.list1.length > 0 && data.footer.list1.map((item, index) => (
+                                            <li key={index}>{item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div className="flex flex-col gap-2">
+                                    <b className="relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-1/2 after:h-[2px] after:bg-neutral-600">
+                                        {data.footer && data.footer.list2title && data.footer.list2title}
+                                    </b>
+                                    <ul>
+                                        {data.footer && data.footer.list2.length > 0 && data.footer.list2.map((item, index) => (
+                                            <li key={index}>{item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div className="text-end clear-start flex flex-col gap-4">
+                                <b>{data.footer && data.footer.list3title && data.footer.list3title}</b>
+                                <ul className="flex flex-col gap-2">
+                                    {data.footer && data.footer.list3.length > 0 && data.footer.list3.map((item, index) => (
+                                        <li key={index}>{item}</li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
-                        
-                        <p>&copy; 2025 New Tech - Todos os direitos reservados</p>
-                    </div>
-                </footer>
+
+                        <div className="p-4 py-8 md:px-16  flex flex-col gap-4 ">
+                            <div className="w-full pb-4">
+                                <p><b>Endereço: </b>{data.address && data.address}</p>
+                            </div>
+                            
+                            <p>&copy; 2025 New Tech - Todos os direitos reservados</p>
+                        </div>
+                    </footer>
 
                     </main>
                 </>

@@ -60,17 +60,22 @@ function Header(){
                                         À venda</a>
                                 </li>
                                 <li className="flex items-center justify-center">
-                                    <Button text="Conversar" className="mx-auto"/>
+                                    <Button className="mx-auto">
+                                    <a
+                                        href="https://wa.me/5511969205393"
+                                        className="block w-full h-full text-white text-center"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Conversar
+                                    </a>
+                                    </Button>
+
                                 </li>
                             </ul>
                         </nav>
                     }
                 </div>
-
-                                    
-
-
-
             </header>
         </>
     )

@@ -75,6 +75,10 @@
     },
 
     "part6":{
+        "title":"Televisores à venda"
+    },
+
+    "footer":{
         "list1title":"Serviços",
         "list1":[
             "Manutenção",
@@ -101,5 +105,6 @@
     "address":"Rua General Osório, 330 - Santa Ifigênia, São Paulo - SP. 01213-000",
     "maps":"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3657.902767137296!2d-46.64186404029697!3d-23.53599933625532!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce595c8fdd717d%3A0x818cf3f53103434f!2sNewTech%20TVs!5e0!3m2!1sen!2sbr!4v1741220063884!5m2!1sen!2sbr",
     "instagram":"https://www.instagram.com/newtech.tvs/",
-    "phone":"5511969205393"
+    "phone":"5511969205393",
+    "whatsapp":"https://wa.me/5511969205393"
 }
