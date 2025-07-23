@@ -9,7 +9,6 @@ function App() {
     <div className='bg-neutral-100'>
       <BrowserRouter>
         <RoutesApp>
-
         </RoutesApp>
       </BrowserRouter>
     </div>

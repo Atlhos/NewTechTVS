@@ -7,7 +7,7 @@ import { FaInstagram, FaWhatsapp, FaPhone  } from "react-icons/fa";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
 import convertDriveLink from "@/utils/convertDriveLink";
-
+import ParticlesBackground from "@/utils/particlesBackground";
 
 interface productsProps{
     name: string;
@@ -105,21 +105,20 @@ function Home(){
                 <>
                     <main className="flex flex-col gap-24">
 
-
-                        <section className="w-full h-screen">
-                            <div className="w-full h-full flex flex-col justify-center items-center gap-16 p-8 max-w-7xl mx-auto">
-                                <article className="flex flex-col gap-6 text-center">
+                        <ParticlesBackground />
+                        <section className="w-full h-screen relative">
+                            
+                            <div className="z-10 w-full h-full flex flex-col justify-center items-center gap-16 p-8 py-16 max-w-7xl mx-auto">
+                                <article className="flex flex-col gap-6 text-center max-w-lg mx-auto">
                                     <h1 className="text-5xl">{data.part1.title}</h1>
                                     <p className="text-xl tex">{data.part1.subtitle}</p>
-                                    
                                     <Button text={data.part1.button} className="scale-125 w-fit mx-auto"/>
-                                    
                                 </article>
 
-                                <article className="flex gap-4 items-center flex-col-reverse">
+                                <article className="flex gap-2 items-center flex-col-reverse md:flex-row-reverse md:items-stretch">
                                     {data.part1.list.length > 0 && data.part1.list.map((item, index) => (
-                                        <span key={index} style={{ width: `calc(200px + ${10 * index}px)` }} 
-                                        className="bg-white p-2 rounded-lg flex items-center gap-4 justify-center text-xs">
+                                        <span key={index} 
+                                        className='bg-white px-4 py-2 rounded-lg flex items-center gap-4 justify-center text-xs w-full text-center'>
                                             <FaCheck className="text-main"/>
                                             <p>{item}</p>
                                         </span>
@@ -130,33 +129,29 @@ function Home(){
                         </section>
 
                         <section className="w-full">
-                            <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8 text-center">
-
-                                <div className="flex flex-col gap-2">
-                                    <h1 className="title">{data.part2.title}</h1>
-                                    <p>{data.part2.description}</p>
-                                </div>
-
-                                
-                                <div className="w-full material aspect-square p-4 rounded-lg">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.867249697327!2d-46.644036988099344!3d-23.537276578727973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce595c8fdd717d%3A0x818cf3f53103434f!2sNewTech%20TVs!5e0!3m2!1spt-BR!2sbr!4v1753126427191!5m2!1spt-BR!2sbr" width="100%" height="100%"></iframe>
+                            <div className="p-8 max-w-7xl mx-auto flex flex-col gap-2 text-center lg:gap-8">
+                                <h1 className="title">{data.part2.title}</h1>
+                                <div className="flex flex-col gap-8 lg:flex-row lg:gap-16">
+                                    <p className="flex-1 lg:text-lg lg:text-start">{data.part2.description}</p>
+                                    <div className="w-full material aspect-square p-4 rounded-lg md:aspect-video flex-1">
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.867249697327!2d-46.644036988099344!3d-23.537276578727973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce595c8fdd717d%3A0x818cf3f53103434f!2sNewTech%20TVs!5e0!3m2!1spt-BR!2sbr!4v1753126427191!5m2!1spt-BR!2sbr" width="100%" height="100%"></iframe>
+                                    </div>
                                 </div>
                             </div>
-
                         </section>
 
                         <section className="w-full">
                             <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8">
                                 <h1 className="title">{data.part3.title}</h1>
-                                <div className="material flex flex-col gap-12 rounded-lg p-8">
+                                <div className="material flex flex-col gap-12 rounded-lg p-8 md:flex-row">
                                     {data.part3.list.length > 0 && data.part3.list.map((item, index) => (
-                                        <div key={index} className="p-4 border-l-2 border-main">
+                                        <div key={index} className="p-4 border-l-2 border-main flex-1">
                                             <div className="flex items-center gap-4">
                                                 <div dangerouslySetInnerHTML={{ __html: item.icon }} />
-                                                <h3 className="text-xl text-main">{item.title}</h3>
+                                                <h3 className="text-xl text-main md:text-sm">{item.title}</h3>
                                             </div>
                                             
-                                            <p className="text-sm">{item.description}</p>
+                                            <p className="text-sm md:mt-4">{item.description}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -169,9 +164,10 @@ function Home(){
                                 <div className="material p-8 text-center text-xl flex flex-col gap-12 rounded-lg">
                                     <img src='./icon.webp' alt='logo' className="w-full max-w-32 self-center"/>
                                     <p>{data.part4.title2}</p>
-                                    <div className="flex overflow-x-auto gap-4 p-4 border-2 border-white rounded-lg hide-scrollbar w-full mx-auto" ref={scrollRef}>
+                                    <div className="flex overflow-x-auto gap-4 p-4 border-2 border-white rounded-lg hide-scrollbar w-full mx-auto md:w-4/5
+                                    lg:w-1/2" ref={scrollRef}>
                                         {data.part4.list.length > 0 && data.part4.list.map((item, index) => (
-                                            <article key={index} className="min-w-16">
+                                            <article key={index} className="min-w-16 lg:min-w-24">
                                                 <img src={item} alt="logo" className="w-full" />
                                             </article>
                                         ))}
@@ -183,16 +179,16 @@ function Home(){
                         <section className="w-full">
                             <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8">
                                 <h1 className="title">{data.part5.title}</h1>
-                                <div className="flex flex-col gap-8">
+                                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-4 lg:items-stretch">
                                     {data.part5.list.length > 0 && data.part5.list.map((item, index) => (
                                         <article key={index} className="p-3 max-w-7xl mx-auto flex flex-col gap-2 border-2 border-white rounded-lg">
-                                            <div className="aspect-video w-full bg-black overflow-hidden rounded-lg">
+                                            <div className="aspect-video w-full bg-black overflow-hidden rounded-lg lg:flex-1">
                                                 <img src={item.image} alt="logo" className="w-full object-cover h-full" />
                                             </div>
 
-                                            <div className="bg-white p-4 rounded-lg">
+                                            <div className="bg-white p-4 rounded-lg lg:-full lg:flex-1">
                                                 <h3>{item.title}</h3>
-                                                <p className="text-xs">{item.description}</p>
+                                                <p className="text-xs h-full">{item.description}</p>
                                             </div>
 
                                         </article>
