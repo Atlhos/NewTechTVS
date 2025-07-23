@@ -20,26 +20,33 @@ function Home(){
     const [loading, setLoading] = useState(true);
     const data = json || null;
     const [products, setProducts] = useState<productsProps[]>([]); 
-    const [direction, setDirection] = useState(1);
-
+    
     useEffect(() => {
         const scrollContainer = scrollRef.current;
-        if (!scrollContainer) return;
-
-        const speed = 1.5;
-        const interval = setInterval(() => {
-        scrollContainer.scrollLeft += direction * speed;
-
-        const atEnd =
-            scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth;
-        const atStart = scrollContainer.scrollLeft <= 0;
-
-        if (atEnd) setDirection(-1); 
-        if (atStart) setDirection(1); 
-        }, 10); 
-
-        return () => clearInterval(interval);
-    }, [direction]);
+        if (!scrollContainer || !data?.part4?.list?.length) return;
+    
+        const speed = 1;
+        const containerWidth = scrollContainer.scrollWidth / 2; // Dividido por 2 porque duplicamos os itens
+        let scrollPosition = 0;
+    
+        const animate = () => {
+            scrollPosition += speed;
+            
+            // Reset para posição inicial quando chegar ao final
+            if (scrollPosition >= containerWidth) {
+                scrollPosition = 0;
+            }
+            
+            scrollContainer.style.transform = `translateX(-${scrollPosition}px)`;
+            requestAnimationFrame(animate);
+        };
+    
+        const animationId = requestAnimationFrame(animate);
+    
+        return () => {
+            cancelAnimationFrame(animationId);
+        };
+    }, [data?.part4?.list]);
 
     async function getProducts() {
         const sheetID = import.meta.env.VITE_SHEETID;
@@ -103,13 +110,12 @@ function Home(){
             <Header />
             {data && (
                 <>
-                    <main className="flex flex-col gap-24">
+                    <main className="flex flex-col">
 
-                        <ParticlesBackground />
-                        <section className="w-full h-screen relative">
-                            
+                        <section className="w-full h-screen relative pb-24">
+                            <ParticlesBackground/>
                             <div className="z-10 w-full h-full flex flex-col justify-center items-center gap-16 p-8 py-16 max-w-7xl mx-auto">
-                                <article className="flex flex-col gap-6 text-center max-w-lg mx-auto">
+                                <article className="flex flex-col gap-6 text-center max-w-lg mx-auto mt-14">
                                     <h1 className="text-5xl">{data.part1.title}</h1>
                                     <p className="text-xl tex">{data.part1.subtitle}</p>
                                     <Button text={data.part1.button} className="scale-125 w-fit mx-auto"/>
@@ -128,7 +134,7 @@ function Home(){
                             </div>
                         </section>
 
-                        <section className="w-full">
+                        <section className="w-full bg-neutral-100 z-10 pb-24" id='about'>
                             <div className="p-8 max-w-7xl mx-auto flex flex-col gap-2 text-center lg:gap-8">
                                 <h1 className="title">{data.part2.title}</h1>
                                 <div className="flex flex-col gap-8 lg:flex-row lg:gap-16">
@@ -140,7 +146,7 @@ function Home(){
                             </div>
                         </section>
 
-                        <section className="w-full">
+                        <section className="w-full bg-neutral-100 z-10 pb-24">
                             <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8">
                                 <h1 className="title">{data.part3.title}</h1>
                                 <div className="material flex flex-col gap-12 rounded-lg p-8 md:flex-row">
@@ -164,19 +170,30 @@ function Home(){
                                 <div className="material p-8 text-center text-xl flex flex-col gap-12 rounded-lg">
                                     <img src='./icon.webp' alt='logo' className="w-full max-w-32 self-center"/>
                                     <p>{data.part4.title2}</p>
-                                    <div className="flex overflow-x-auto gap-4 p-4 border-2 border-white rounded-lg hide-scrollbar w-full mx-auto md:w-4/5
-                                    lg:w-1/2" ref={scrollRef}>
-                                        {data.part4.list.length > 0 && data.part4.list.map((item, index) => (
-                                            <article key={index} className="min-w-16 lg:min-w-24">
-                                                <img src={item} alt="logo" className="w-full" />
-                                            </article>
-                                        ))}
+                                    <div className="relative overflow-hidden w-full">
+                                        <div 
+                                            className="flex gap-8 p-4 border-2 border-white rounded-lg items-center whitespace-nowrap"
+                                            ref={scrollRef}
+                                            style={{ width: 'max-content' }}
+                                        >
+                                            {data.part4.list.length > 0 && data.part4.list.map((item, index) => (
+                                                <article key={index} className="inline-flex justify-center items-center w-32 h-20 flex-shrink-0">
+                                                    <img src={item} alt="logo" className="max-h-full max-w-full object-contain" />
+                                                </article>
+                                            ))}
+                                            {/* Duplica os itens para criar um loop contínuo */}
+                                            {data.part4.list.length > 0 && data.part4.list.map((item, index) => (
+                                                <article key={`copy-${index}`} className="inline-flex justify-center items-center w-32 h-20 flex-shrink-0">
+                                                    <img src={item} alt="logo" className="max-h-full max-w-full object-contain" />
+                                                </article>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
 
-                        <section className="w-full">
+                        <section className="w-full bg-neutral-100 z-10 pb-24" id='services'>
                             <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8">
                                 <h1 className="title">{data.part5.title}</h1>
                                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-4 lg:items-stretch">
@@ -197,7 +214,7 @@ function Home(){
                             </div>
                         </section>
 
-                        <section className="w-full">
+                        <section className="w-full bg-neutral-100 z-10 pb-24" id='sales'>
                             <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8">
                                 <h1 className="title">{data.part6.title}</h1>
                                 <div className="w-full items-stretch">
@@ -232,74 +249,74 @@ function Home(){
                             </div>
                         </section>
 
-                    <footer className=" w-full flex-col pt-6 flex gap-8 shadow-lg border-t-2 border-white text-neutral-600">
-                        <div className="p-4 py-6 w-full m-auto max-w-7xl">
-                            <ul className="flex gap-6 text-2xl">
-                                <li className="hover:scale-125 duration-200">
-                                    <a
-                                    href={data.instagram && data.instagram} target="_blank">
-                                        < FaInstagram/>
-                                    </a>
-                                </li>
-                                <li className="hover:scale-125 duration-200">
-                                    <a target="_blank"
-                                    href={`https://api.whatsapp.com/send?phone=${data && data.phone && data.phone}`}>
-                                        < FaWhatsapp/>
-                                    </a>
-                                </li>
-                                <li className="hover:scale-125 duration-200">
-                                    <a href={data.phone &&  `tel:${data.phone}` } target="_blank"
-                                    >
-                                        < FaPhone />
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div className="flex items-start justify-between p-4 w-full m-auto max-w-7xl">
-
-                            <div className="flex flex-col gap-4 lg:flex-row lg:gap-16">
-                                <div className="flex flex-col gap-2">
-                                    <b className="relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-1/2 after:h-[2px] after:bg-neutral-600">
-                                        {data.footer && data.footer.list1title && data.footer.list1title}
-                                    </b>
-                                    <ul>
-                                        {data.footer && data.footer.list1.length > 0 && data.footer.list1.map((item, index) => (
-                                            <li key={index}>{item}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-
-                                <div className="flex flex-col gap-2">
-                                    <b className="relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-1/2 after:h-[2px] after:bg-neutral-600">
-                                        {data.footer && data.footer.list2title && data.footer.list2title}
-                                    </b>
-                                    <ul>
-                                        {data.footer && data.footer.list2.length > 0 && data.footer.list2.map((item, index) => (
-                                            <li key={index}>{item}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div className="text-end clear-start flex flex-col gap-4">
-                                <b>{data.footer && data.footer.list3title && data.footer.list3title}</b>
-                                <ul className="flex flex-col gap-2">
-                                    {data.footer && data.footer.list3.length > 0 && data.footer.list3.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))}
+                        <footer className=" w-full flex-col pt-6 flex gap-8 shadow-lg border-t-2 border-white text-neutral-600 bg-neutral-100 z-10 pb-24">
+                            <div className="p-4 py-6 w-full m-auto max-w-7xl">
+                                <ul className="flex gap-6 text-2xl">
+                                    <li className="hover:scale-125 duration-200">
+                                        <a
+                                        href={data.instagram && data.instagram} target="_blank">
+                                            < FaInstagram/>
+                                        </a>
+                                    </li>
+                                    <li className="hover:scale-125 duration-200">
+                                        <a target="_blank"
+                                        href={`https://api.whatsapp.com/send?phone=${data && data.phone && data.phone}`}>
+                                            < FaWhatsapp/>
+                                        </a>
+                                    </li>
+                                    <li className="hover:scale-125 duration-200">
+                                        <a href={data.phone &&  `tel:${data.phone}` } target="_blank"
+                                        >
+                                            < FaPhone />
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
-                        </div>
 
-                        <div className="p-4 py-8 md:px-16  flex flex-col gap-4 ">
-                            <div className="w-full pb-4">
-                                <p><b>Endereço: </b>{data.address && data.address}</p>
+                            <div className="flex items-start justify-between p-4 w-full m-auto max-w-7xl">
+
+                                <div className="flex flex-col gap-4 lg:flex-row lg:gap-16">
+                                    <div className="flex flex-col gap-2">
+                                        <b className="relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-1/2 after:h-[2px] after:bg-neutral-600">
+                                            {data.footer && data.footer.list1title && data.footer.list1title}
+                                        </b>
+                                        <ul>
+                                            {data.footer && data.footer.list1.length > 0 && data.footer.list1.map((item, index) => (
+                                                <li key={index}>{item}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    <div className="flex flex-col gap-2">
+                                        <b className="relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-1/2 after:h-[2px] after:bg-neutral-600">
+                                            {data.footer && data.footer.list2title && data.footer.list2title}
+                                        </b>
+                                        <ul>
+                                            {data.footer && data.footer.list2.length > 0 && data.footer.list2.map((item, index) => (
+                                                <li key={index}>{item}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="text-end clear-start flex flex-col gap-4">
+                                    <b>{data.footer && data.footer.list3title && data.footer.list3title}</b>
+                                    <ul className="flex flex-col gap-2">
+                                        {data.footer && data.footer.list3.length > 0 && data.footer.list3.map((item, index) => (
+                                            <li key={index}>{item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
-                            
-                            <p>&copy; 2025 New Tech - Todos os direitos reservados</p>
-                        </div>
-                    </footer>
+
+                            <div className="p-4 py-8 md:px-16  flex flex-col gap-4 ">
+                                <div className="w-full pb-4">
+                                    <p><b>Endereço: </b>{data.address && data.address}</p>
+                                </div>
+                                
+                                <p>&copy; 2025 New Tech - Todos os direitos reservados</p>
+                            </div>
+                        </footer>
 
                     </main>
                 </>
