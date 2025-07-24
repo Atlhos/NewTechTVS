@@ -2,7 +2,7 @@ import Header from "@/componentes/header";
 import json from "../../services/ptbr.json";
 import Button from "@/componentes/button";
 import { FaCheck } from "react-icons/fa";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaInstagram, FaWhatsapp, FaPhone  } from "react-icons/fa";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
@@ -15,38 +15,9 @@ interface productsProps{
     price: string;
 }
 function Home(){
-
-    const scrollRef = useRef<HTMLDivElement>(null);
     const [loading, setLoading] = useState(true);
     const data = json || null;
     const [products, setProducts] = useState<productsProps[]>([]); 
-    
-    useEffect(() => {
-        const scrollContainer = scrollRef.current;
-        if (!scrollContainer || !data?.part4?.list?.length) return;
-    
-        const speed = 1;
-        const containerWidth = scrollContainer.scrollWidth / 2; // Dividido por 2 porque duplicamos os itens
-        let scrollPosition = 0;
-    
-        const animate = () => {
-            scrollPosition += speed;
-            
-            // Reset para posição inicial quando chegar ao final
-            if (scrollPosition >= containerWidth) {
-                scrollPosition = 0;
-            }
-            
-            scrollContainer.style.transform = `translateX(-${scrollPosition}px)`;
-            requestAnimationFrame(animate);
-        };
-    
-        const animationId = requestAnimationFrame(animate);
-    
-        return () => {
-            cancelAnimationFrame(animationId);
-        };
-    }, [data?.part4?.list]);
 
     async function getProducts() {
         const sheetID = import.meta.env.VITE_SHEETID;
@@ -96,6 +67,22 @@ function Home(){
             items: 1
         }
     };
+
+    const responsiveBrands = {
+        desktop: {
+            breakpoint: { max: 999999999999, min: 1024 },
+            items: 8
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 640 },
+            items: 5
+        },
+        mobile: {
+            breakpoint: { max: 640, min: 0 },
+            items:3
+        }
+    };
+
 
     if (loading) {
         return (
@@ -164,30 +151,21 @@ function Home(){
                             </div>
                         </section>
 
-                        <section className="w-full">
+                        <section className="w-full bg-neutral-100 z-10 pb-24" id='brands'>
                             <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8">
                                 <h1 className="title">{data.part4.title}</h1>
                                 <div className="material p-8 text-center text-xl flex flex-col gap-12 rounded-lg">
                                     <img src='./icon.webp' alt='logo' className="w-full max-w-32 self-center"/>
                                     <p>{data.part4.title2}</p>
-                                    <div className="relative overflow-hidden w-full">
-                                        <div 
-                                            className="flex gap-8 p-4 border-2 border-white rounded-lg items-center whitespace-nowrap"
-                                            ref={scrollRef}
-                                            style={{ width: 'max-content' }}
-                                        >
+                                    <div className="lg:mx-auto lg:max-w-2/3 p-2 border-2 rounded-lg border-white">
+                                        <Carousel responsive={responsiveBrands}
+                                        autoPlay = {true } autoPlaySpeed = { 500 } 
+                                        infinite = { true }
+                                        arrows={false}>
                                             {data.part4.list.length > 0 && data.part4.list.map((item, index) => (
-                                                <article key={index} className="inline-flex justify-center items-center w-32 h-20 flex-shrink-0">
-                                                    <img src={item} alt="logo" className="max-h-full max-w-full object-contain" />
-                                                </article>
+                                                <img key={index} src={item} className="w-full object-contain h-full p-2" />
                                             ))}
-                                            {/* Duplica os itens para criar um loop contínuo */}
-                                            {data.part4.list.length > 0 && data.part4.list.map((item, index) => (
-                                                <article key={`copy-${index}`} className="inline-flex justify-center items-center w-32 h-20 flex-shrink-0">
-                                                    <img src={item} alt="logo" className="max-h-full max-w-full object-contain" />
-                                                </article>
-                                            ))}
-                                        </div>
+                                        </Carousel>
                                     </div>
                                 </div>
                             </div>
